@@ -1,7 +1,7 @@
 import { CheckCircle, Lock } from "phosphor-react";
 import { formatDate } from "../utils/formatDate";
-import { isToday } from "date-fns";
 import { dateCompare } from "../utils/dateCompare";
+import { Link } from "react-router-dom";
 interface LessonProps {
   title: string;
   slug: string;
@@ -17,12 +17,13 @@ export function Lesson({ title, slug, availableAt, type }: LessonProps) {
 
   const Styles = {
     formatDate: "EEEE '•' dd MMMM 'de' yyyy '•' k'h'mm",
+    group: isDateNow ? "" : "group",
     date: "text-gray-300 capitalize ",
     pulse:
       "w-2 h-2 animate-ping absolute inline-flex  rounded-full bg-green-300 ",
     box: isDateNow
       ? " bg-green-500  relative rounded border border-gray-100 p-4 m-2 duration-300  hover:bg-green-300  ease-in"
-      : "  rounded border border-gray-500 p-4 m-2 duration-300  hover:bg-gray-500 ease-in",
+      : "  rounded border border-gray-500 p-4 m-2 duration-300  group-hover:bg-gray-500 group-hover:border-green-500 ease-in",
     header: "flex items-center justify-between",
     Lesson: isLessonAvailable
       ? isDateNow
@@ -38,7 +39,7 @@ export function Lesson({ title, slug, availableAt, type }: LessonProps) {
   };
 
   return (
-    <a href="#">
+    <Link to={`/event/lesson/${slug}`} className={Styles.group}>
       <span className={Styles.date}>
         {formatDate(availableAt, Styles.formatDate)}
       </span>
@@ -62,6 +63,6 @@ export function Lesson({ title, slug, availableAt, type }: LessonProps) {
         </header>
         <strong className={Styles.title}>{title}</strong>
       </div>
-    </a>
+    </Link>
   );
 }

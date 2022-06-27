@@ -6,7 +6,6 @@ export function dateCompare(date: Date) {
   // Data final
   const dateEnd = new Date(dateNow.setHours(23, 59, 59, 999));
   // Data que vamos comparar
-  console.log({ dateStart, dateEnd, date });
   if (
     dateStart.getTime() < today.getTime() &&
     dateEnd.getTime() > today.getTime()
