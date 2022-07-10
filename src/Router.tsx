@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { PageNotFound } from "./Pages/404";
 import Event from "./Pages/Event";
-import Home from "./Pages/Home";
+import { Home } from "./Pages/Home";
 
 export function Router() {
   return (

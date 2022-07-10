@@ -1,54 +1,86 @@
-import { Link } from "react-router-dom";
+import { useState, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { Logo } from "../components/Logo";
+import { useCreateSubscriberMutation } from "../graphql/generated";
 
-export default function Home() {
+export function Home() {
+  const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [createSubscriber, { loading }] = useCreateSubscriberMutation();
+
+  async function handleSubscribe(event: FormEvent) {
+    event.preventDefault(); // Previne que direcione para alguma página após o Submit dos dados o formulário
+
+    await createSubscriber({
+      variables: {
+        name,
+        email,
+      },
+    });
+
+    navigate("/event");
+  }
+
   return (
-    <section className="px-2 py-32  md:px-0">
-      <div className="container items-center max-w-6xl px-8 mx-auto xl:px-5">
-        <div className="flex flex-wrap items-center sm:-mx-3">
-          <div className="w-full md:w-1/2 md:px-3">
-            <div className="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
-              <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
-                <span className="block text-gray-100 xl:inline">
-                  A OX PAY através da tecnologia e inovação
-                </span>
-                <span className="block text-indigo-600 xl:inline">
-                  Tell Your Story!
-                </span>
-              </h1>
-              <p className="mx-auto text-base text-gray-100 sm:max-w-md lg:text-xl md:max-w-3xl">
-                It's never been easier to build beautiful websites that convey
-                your message and tell your story.
-              </p>
-              <div className="relative flex flex-col sm:flex-row sm:space-x-4">
-                <Link
-                  to="/event"
-                  className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto"
-                >
-                  Try It Free
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5 ml-1"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="w-full md:w-1/2">
-            <div className="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
-              <img src="https://cdn.devdojo.com/images/november2020/hero-image.jpeg" />
-            </div>
-          </div>
+    <div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
+      <div className="w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto">
+        <div className="max-w-[640px]">
+          <Logo />
+
+          <h1 className="mt-8 text-[2.5rem] leading-tight">
+            Construa uma{" "}
+            <strong className="text-blue-500">aplicação completa</strong>, do
+            zero, com <strong className="text-blue-500">React</strong>
+          </h1>
+
+          <p className="mt-4 text-gray-200 leading-relaxed">
+            Em apenas uma semana você vai dominar na prática uma das tecnologias
+            mais utilizadas e com alta demanda para acessar as melhores
+            oportunidades do mercado.
+          </p>
+        </div>
+
+        <div className="p-8 bg-gray-700 border border-gray-500 rounded">
+          <strong className="text-2xl mb-6 block">
+            Inscreva-se gratuitamente
+          </strong>
+
+          <form
+            onSubmit={handleSubscribe}
+            className="flex flex-col gap-2 w-full"
+          >
+            <input
+              className="bg-gray-900 rounded px-5 h-14"
+              type="text"
+              placeholder="Seu nome completo"
+              onChange={(event) => setName(event.target.value)}
+            />
+
+            <input
+              className="bg-gray-900 rounded px-5 h-14"
+              type="email"
+              placeholder="Digite seu email"
+              onChange={(event) => setEmail(event.target.value)}
+            />
+
+            <button
+              className="mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50"
+              type="submit"
+              disabled={loading}
+            >
+              Garantir minha vaga
+            </button>
+          </form>
         </div>
       </div>
-    </section>
+      <img
+        src="/src/assets/code-mockup.png"
+        className="mt-10"
+        alt="code mockup image"
+      />
+    </div>
   );
 }
