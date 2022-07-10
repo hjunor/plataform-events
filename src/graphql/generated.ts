@@ -1247,6 +1247,8 @@ export type Lesson = Node & {
   /** The ID of the Youtube video. */
   videoId: Scalars['String'];
   availableAt?: Maybe<Scalars['DateTime']>;
+  material?: Maybe<Scalars['String']>;
+  walp?: Maybe<Scalars['String']>;
   /** User that created this document */
   createdBy?: Maybe<User>;
   /** User that last updated this document */
@@ -1336,6 +1338,8 @@ export type LessonCreateInput = {
   description?: InputMaybe<Scalars['String']>;
   videoId: Scalars['String'];
   availableAt?: InputMaybe<Scalars['DateTime']>;
+  material?: InputMaybe<Scalars['String']>;
+  walp?: InputMaybe<Scalars['String']>;
   challenge?: InputMaybe<ChallengeCreateOneInlineInput>;
   teacher?: InputMaybe<TeacherCreateOneInlineInput>;
   lessonType: LessonType;
@@ -1529,6 +1533,44 @@ export type LessonManyWhereInput = {
   availableAt_gt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than or equal the given value. */
   availableAt_gte?: InputMaybe<Scalars['DateTime']>;
+  material?: InputMaybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  material_not?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  material_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  material_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  material_contains?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  material_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  material_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  material_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  material_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  material_not_ends_with?: InputMaybe<Scalars['String']>;
+  walp?: InputMaybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  walp_not?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  walp_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  walp_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  walp_contains?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  walp_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  walp_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  walp_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  walp_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  walp_not_ends_with?: InputMaybe<Scalars['String']>;
   createdBy?: InputMaybe<UserWhereInput>;
   updatedBy?: InputMaybe<UserWhereInput>;
   publishedBy?: InputMaybe<UserWhereInput>;
@@ -1565,6 +1607,10 @@ export enum LessonOrderByInput {
   VideoIdDesc = 'videoId_DESC',
   AvailableAtAsc = 'availableAt_ASC',
   AvailableAtDesc = 'availableAt_DESC',
+  MaterialAsc = 'material_ASC',
+  MaterialDesc = 'material_DESC',
+  WalpAsc = 'walp_ASC',
+  WalpDesc = 'walp_DESC',
   LessonTypeAsc = 'lessonType_ASC',
   LessonTypeDesc = 'lessonType_DESC'
 }
@@ -1580,6 +1626,8 @@ export type LessonUpdateInput = {
   description?: InputMaybe<Scalars['String']>;
   videoId?: InputMaybe<Scalars['String']>;
   availableAt?: InputMaybe<Scalars['DateTime']>;
+  material?: InputMaybe<Scalars['String']>;
+  walp?: InputMaybe<Scalars['String']>;
   challenge?: InputMaybe<ChallengeUpdateOneInlineInput>;
   teacher?: InputMaybe<TeacherUpdateOneInlineInput>;
   lessonType?: InputMaybe<LessonType>;
@@ -1818,6 +1866,44 @@ export type LessonWhereInput = {
   availableAt_gt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than or equal the given value. */
   availableAt_gte?: InputMaybe<Scalars['DateTime']>;
+  material?: InputMaybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  material_not?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  material_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  material_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  material_contains?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  material_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  material_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  material_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  material_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  material_not_ends_with?: InputMaybe<Scalars['String']>;
+  walp?: InputMaybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  walp_not?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  walp_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  walp_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  walp_contains?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  walp_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  walp_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  walp_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  walp_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  walp_not_ends_with?: InputMaybe<Scalars['String']>;
   createdBy?: InputMaybe<UserWhereInput>;
   updatedBy?: InputMaybe<UserWhereInput>;
   publishedBy?: InputMaybe<UserWhereInput>;
@@ -1839,6 +1925,8 @@ export type LessonWhereInput = {
 export type LessonWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
   slug?: InputMaybe<Scalars['String']>;
+  material?: InputMaybe<Scalars['String']>;
+  walp?: InputMaybe<Scalars['String']>;
 };
 
 /** Locale system enumeration */
@@ -5586,7 +5674,7 @@ export type GetLessonBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename?: 'Lesson', title: string, videoId: string, description?: string | null, teacher?: { __typename?: 'Teacher', bio: string, avatarURL: string, name: string } | null } | null };
+export type GetLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename?: 'Lesson', title: string, videoId: string, description?: string | null, material?: string | null, walp?: string | null, teacher?: { __typename?: 'Teacher', bio: string, avatarURL: string, name: string } | null } | null };
 
 export type GetLessonsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5634,6 +5722,8 @@ export const GetLessonBySlugDocument = gql`
     title
     videoId
     description
+    material
+    walp
     teacher {
       bio
       avatarURL
