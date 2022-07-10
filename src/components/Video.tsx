@@ -7,17 +7,18 @@ import {
 } from "phosphor-react";
 import "@vime/core/themes/default.css";
 import { useQuery } from "@apollo/client";
-import { GetLessonBySlugResponse, GET_SLUG_QUERY } from "../Services/querys";
 interface VideoProps {
   lessonSlug: string;
 }
 
+import { useGetLessonBySlugQuery } from "../graphql/generated";
+
 export default function Video({ lessonSlug }: VideoProps) {
-  const { data } = useQuery<GetLessonBySlugResponse>(GET_SLUG_QUERY, {
+  const { data } = useGetLessonBySlugQuery({
     variables: { slug: lessonSlug },
   });
 
-  if (!data) {
+  if (!data || !data.lesson) {
     return (
       <div className="flex-1 ">
         <h1>Carregando ...</h1>
@@ -35,38 +36,40 @@ export default function Video({ lessonSlug }: VideoProps) {
         </div>
       </div>
       <div className="p-8 max-w-[1100px] mx-auto ">
-        <div className="flex itens-start gap-16">
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold">{data.lesson.title}</h1>
-            <p className="mt-4 text-gray-200 leading-relaxed">
-              {data.lesson.description}
-            </p>
-            <div className="flex items-center gap-4 mt-6">
-              <img
-                src="https://github.com/hjunor.png"
-                alt="avatar"
-                className="avatar"
-              />
-              <div className="leading-relaxed">
-                <strong className="font-bold text-2xl block">
-                  {data.lesson.teacher.name}
-                </strong>
+        {data.lesson.teacher && (
+          <div className="flex itens-start gap-16">
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold">{data.lesson.title}</h1>
+              <p className="mt-4 text-gray-200 leading-relaxed">
+                {data.lesson.description}
+              </p>
+              <div className="flex items-center gap-4 mt-6">
+                <img
+                  src="https://github.com/hjunor.png"
+                  alt="avatar"
+                  className="avatar"
+                />
+                <div className="leading-relaxed">
+                  <strong className="font-bold text-2xl block">
+                    {data.lesson.teacher.name}
+                  </strong>
 
-                <span className="text-gray-200 text-sm block">
-                  {data.lesson.teacher.bio}
-                </span>
+                  <span className="text-gray-200 text-sm block">
+                    {data.lesson.teacher.bio}
+                  </span>
+                </div>
               </div>
             </div>
+            <div className="flex flex-col gap-4 mt-6">
+              <a href="#" className="btn-1">
+                <DiscordLogo size={24} /> Comunidade do Discord
+              </a>
+              <a href="#" className="btn-2">
+                <Lightning size={24} /> Acesse o Desafio
+              </a>
+            </div>
           </div>
-          <div className="flex flex-col gap-4 mt-6">
-            <a href="#" className="btn-1">
-              <DiscordLogo size={24} /> Comunidade do Discord
-            </a>
-            <a href="#" className="btn-2">
-              <Lightning size={24} /> Acesse o Desafio
-            </a>
-          </div>
-        </div>
+        )}
         <div className="gap-8 mt-20 grid grid-cols-2">
           <a
             href=""

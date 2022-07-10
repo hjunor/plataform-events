@@ -1,4 +1,4 @@
-schema: your_url_api
+schema: https://api-sa-east-1.graphcms.com/v2/cl4qcaiwq3oy001z49iyz82kt/master
 
 documents: "./src/graphql/**/*.graphql"
 
