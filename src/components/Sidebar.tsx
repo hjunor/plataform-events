@@ -4,7 +4,7 @@ import { Lesson } from "./Lesson";
 export default function Sidebar() {
   const { GetTypeLessons, GetLessons } = useLessons();
 
-  const data = GetTypeLessons();
+  const data: any = GetTypeLessons();
 
   return (
     <aside className="w-[380px] bg-gray-700 p-6 border-l border-gray-600">
