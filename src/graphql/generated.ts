@@ -1249,6 +1249,7 @@ export type Lesson = Node & {
   availableAt?: Maybe<Scalars['DateTime']>;
   material?: Maybe<Scalars['String']>;
   walp?: Maybe<Scalars['String']>;
+  type: Scalars['String'];
   /** User that created this document */
   createdBy?: Maybe<User>;
   /** User that last updated this document */
@@ -1340,6 +1341,7 @@ export type LessonCreateInput = {
   availableAt?: InputMaybe<Scalars['DateTime']>;
   material?: InputMaybe<Scalars['String']>;
   walp?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
   challenge?: InputMaybe<ChallengeCreateOneInlineInput>;
   teacher?: InputMaybe<TeacherCreateOneInlineInput>;
   lessonType: LessonType;
@@ -1571,6 +1573,25 @@ export type LessonManyWhereInput = {
   walp_ends_with?: InputMaybe<Scalars['String']>;
   /** All values not ending with the given string */
   walp_not_ends_with?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  type_not?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  type_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  type_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  type_contains?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  type_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  type_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  type_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  type_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  type_not_ends_with?: InputMaybe<Scalars['String']>;
   createdBy?: InputMaybe<UserWhereInput>;
   updatedBy?: InputMaybe<UserWhereInput>;
   publishedBy?: InputMaybe<UserWhereInput>;
@@ -1611,6 +1632,8 @@ export enum LessonOrderByInput {
   MaterialDesc = 'material_DESC',
   WalpAsc = 'walp_ASC',
   WalpDesc = 'walp_DESC',
+  TypeAsc = 'type_ASC',
+  TypeDesc = 'type_DESC',
   LessonTypeAsc = 'lessonType_ASC',
   LessonTypeDesc = 'lessonType_DESC'
 }
@@ -1628,6 +1651,7 @@ export type LessonUpdateInput = {
   availableAt?: InputMaybe<Scalars['DateTime']>;
   material?: InputMaybe<Scalars['String']>;
   walp?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
   challenge?: InputMaybe<ChallengeUpdateOneInlineInput>;
   teacher?: InputMaybe<TeacherUpdateOneInlineInput>;
   lessonType?: InputMaybe<LessonType>;
@@ -1655,6 +1679,7 @@ export type LessonUpdateManyInput = {
   description?: InputMaybe<Scalars['String']>;
   videoId?: InputMaybe<Scalars['String']>;
   availableAt?: InputMaybe<Scalars['DateTime']>;
+  type?: InputMaybe<Scalars['String']>;
   lessonType?: InputMaybe<LessonType>;
 };
 
@@ -1904,6 +1929,25 @@ export type LessonWhereInput = {
   walp_ends_with?: InputMaybe<Scalars['String']>;
   /** All values not ending with the given string */
   walp_not_ends_with?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  type_not?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  type_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  type_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  type_contains?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  type_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  type_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  type_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  type_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  type_not_ends_with?: InputMaybe<Scalars['String']>;
   createdBy?: InputMaybe<UserWhereInput>;
   updatedBy?: InputMaybe<UserWhereInput>;
   publishedBy?: InputMaybe<UserWhereInput>;
@@ -5676,6 +5720,13 @@ export type GetLessonBySlugQueryVariables = Exact<{
 
 export type GetLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename?: 'Lesson', title: string, videoId: string, description?: string | null, material?: string | null, walp?: string | null, teacher?: { __typename?: 'Teacher', bio: string, avatarURL: string, name: string } | null } | null };
 
+export type GetLessonByTypeQueryVariables = Exact<{
+  type?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetLessonByTypeQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', id: string, title: string, slug: string, availableAt?: any | null, lessonType: LessonType }> };
+
 export type GetLessonsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5760,6 +5811,45 @@ export function useGetLessonBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetLessonBySlugQueryHookResult = ReturnType<typeof useGetLessonBySlugQuery>;
 export type GetLessonBySlugLazyQueryHookResult = ReturnType<typeof useGetLessonBySlugLazyQuery>;
 export type GetLessonBySlugQueryResult = Apollo.QueryResult<GetLessonBySlugQuery, GetLessonBySlugQueryVariables>;
+export const GetLessonByTypeDocument = gql`
+    query GetLessonByType($type: String) {
+  lessons(where: {type: $type}, orderBy: availableAt_ASC, stage: PUBLISHED) {
+    id
+    title
+    slug
+    availableAt
+    lessonType
+  }
+}
+    `;
+
+/**
+ * __useGetLessonByTypeQuery__
+ *
+ * To run a query within a React component, call `useGetLessonByTypeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLessonByTypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLessonByTypeQuery({
+ *   variables: {
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useGetLessonByTypeQuery(baseOptions?: Apollo.QueryHookOptions<GetLessonByTypeQuery, GetLessonByTypeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLessonByTypeQuery, GetLessonByTypeQueryVariables>(GetLessonByTypeDocument, options);
+      }
+export function useGetLessonByTypeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLessonByTypeQuery, GetLessonByTypeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLessonByTypeQuery, GetLessonByTypeQueryVariables>(GetLessonByTypeDocument, options);
+        }
+export type GetLessonByTypeQueryHookResult = ReturnType<typeof useGetLessonByTypeQuery>;
+export type GetLessonByTypeLazyQueryHookResult = ReturnType<typeof useGetLessonByTypeLazyQuery>;
+export type GetLessonByTypeQueryResult = Apollo.QueryResult<GetLessonByTypeQuery, GetLessonByTypeQueryVariables>;
 export const GetLessonsDocument = gql`
     query GetLessons {
   lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {

@@ -34,7 +34,7 @@ export const GET_LESSONS_QUERY = gql`
 
 export const GET_SLUG_QUERY = gql`
   query GetSlugBy($slug: String) {
-    lesson(where: { slug: $slug }) {
+    lesson(where: { slug: $slug }, orderBy: availableAt_ASC, stage: PUBLISHED) {
       title
       videoId
       description

@@ -61,7 +61,7 @@ export default function Video({ lessonSlug }: VideoProps) {
               </div>
             </div>
             <div className="flex flex-col gap-4 mt-6">
-              <a href="#" className="btn-1">
+              <a href="#" className="btn-1" aria-disabled>
                 <DiscordLogo size={24} /> Comunidade do Discord
               </a>
               <a href="#" className="btn-2">

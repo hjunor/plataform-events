@@ -1,9 +1,13 @@
 import { useState, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "../components/Logo";
 import { useCreateSubscriberMutation } from "../graphql/generated";
+import bg from "../assets/code-mockup.png";
+import useLessons from "../hook/useLessons";
 
 export function Home() {
+  const { setTypeLessons, GetTypeLessons } = useLessons();
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -13,7 +17,6 @@ export function Home() {
 
   async function handleSubscribe(event: FormEvent) {
     event.preventDefault(); // Previne que direcione para alguma página após o Submit dos dados o formulário
-
     await createSubscriber({
       variables: {
         name,
@@ -21,6 +24,11 @@ export function Home() {
       },
     });
 
+    navigate("/event");
+  }
+
+  function handleTech(tech: string) {
+    setTypeLessons(tech);
     navigate("/event");
   }
 
@@ -74,13 +82,25 @@ export function Home() {
               Garantir minha vaga
             </button>
           </form>
+
+          <button
+            onClick={() => handleTech("go")}
+            className="mt-4 w-full bg-orange-500 uppercase py-4 rounded font-bold text-sm flex justify-center items-center hover:bg-green-700 transition-colors disabled:opacity-50"
+            type="submit"
+          >
+            Go Lang
+          </button>
+          <button
+            onClick={() => handleTech("react")}
+            className="mt-4 w-full bg-blue-700 uppercase py-4 rounded font-bold text-sm flex justify-center items-center hover:bg-green-700 transition-colors disabled:opacity-50"
+            type="submit"
+          >
+            ReactJS
+          </button>
         </div>
       </div>
-      <img
-        src="/src/assets/code-mockup.png"
-        className="mt-10"
-        alt="code mockup image"
-      />
+
+      <img src={bg} className="mt-10" alt="code mockup image" />
     </div>
   );
 }
