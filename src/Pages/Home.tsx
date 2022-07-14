@@ -34,11 +34,11 @@ export function Home() {
 
   return (
     <div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
-      <div className="w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto">
-        <div className="max-w-[640px]">
+      <div className="w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto  flex-wrap ">
+        <div className="max-w-[640px] sm:mx-auto sm:p-8">
           <Logo />
 
-          <h1 className="mt-8 text-[2.5rem] leading-tight">
+          <h1 className="mt-8 text-[2.5rem] leading-tight sm:text-[1.5rem]">
             Plataforma de videos selecionados{" "}
             <strong className="text-blue-500">
               para aprender construir aplicações
@@ -53,7 +53,7 @@ export function Home() {
           </p>
         </div>
 
-        <div className="p-8 bg-gray-700 border border-gray-500 rounded">
+        <div className="p-8 bg-gray-700  lg:bg-gray-700 border border-gray-500 rounded sm:flex sm:flex-col sm:mx-auto">
           <strong className="text-2xl mb-6 block">
             Selecione a Tech abaixo
           </strong>
